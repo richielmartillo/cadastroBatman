@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Produtos</title>
+</head>
+<body>
+    <h1>Lista de Produtos</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Descrição</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody id="tabela">
+        </tbody>
+    </table>
+
+    <script>
+        fetch('http://localhost:3000/produtos')
+            .then(response => response.json())
+            .then(produtos => {
+                const tabela = document.getElementById('tabela');
+                produtos.forEach(p => {
+                    const linha = document.createElement('tr');
+                    linha.innerHTML = `
+                        <td>${p.id}</td>
+                        <td>${p.nome}</td>
+                        <td>${p.preco}</td>
+                        <td>${p.descricao}</td>
+                        <td>${p.quantidade}</td>
+                    `;
+                    tabela.appendChild(linha);
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao carregar produtos:', error);
+            });
+    </script>
+</body>
+</html> 
